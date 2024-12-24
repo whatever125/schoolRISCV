@@ -11,6 +11,9 @@
 `include "sr_cpu.vh"
 
 module sr_cpu
+#(
+    parameter FIFO_DATA_WIDTH = 32
+)
 (
     input           clk,        // clock
     input           rst_n,      // reset
@@ -24,7 +27,7 @@ module sr_cpu
     wire        pcSrc;
     wire        regWrite;
     wire        aluSrc;
-    wire        wdSrc;
+    wire  [1:0] wdSrc;          // three sources: immU, ALU, FIFO
     wire  [2:0] aluControl;
 
     //instruction decode wires
@@ -48,6 +51,11 @@ module sr_cpu
     //program memory access
     assign imAddr = pc >> 2;
     wire [31:0] instr = imData;
+
+    //fifo
+    wire fifoPop;
+    wire fifoPush;
+    wire [FIFO_DATA_WIDTH-1:0] fifoOut;
 
     //instruction decode
     sr_decode id (
@@ -97,7 +105,7 @@ module sr_cpu
         .result     ( aluResult    ) 
     );
 
-    assign wd3 = wdSrc ? immU : aluResult;
+    assign wd3 = { wdSrc == 2'b01 } ? fifoOut : { wdSrc == 2'b01 } ? immU : aluResult;
 
     //control
     sr_control sm_control (
@@ -109,7 +117,19 @@ module sr_cpu
         .regWrite   ( regWrite     ),
         .aluSrc     ( aluSrc       ),
         .wdSrc      ( wdSrc        ),
-        .aluControl ( aluControl   ) 
+        .aluControl ( aluControl   ),
+        .fifoPop    ( fifoPop      ),
+        .fifoPush   ( fifoPush     ) 
+    );
+    
+    //fifo
+    sr_fifo sr_fifo(
+        .clk            ( clk),
+        .reset          ( rst_n),
+        .write_enable   ( fifoPush ),
+        .write_data     ( rd1 ),
+        .read_enable    ( fifoPop ),
+        .read_data      ( fifoOut ),
     );
 
 endmodule
@@ -166,8 +186,10 @@ module sr_control
     output           pcSrc, 
     output reg       regWrite, 
     output reg       aluSrc,
-    output reg       wdSrc,
-    output reg [2:0] aluControl
+    output reg [1:0] wdSrc,
+    output reg [2:0] aluControl,
+    output reg       fifoPop,   // TODO assign
+    output reg       fifoPush   // TODO assign
 );
     reg          branch;
     reg          condZero;
