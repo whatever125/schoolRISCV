@@ -124,12 +124,12 @@ module sr_cpu
     
     //fifo
     sr_fifo sr_fifo(
-        .clk            ( clk),
-        .reset          ( rst_n),
-        .write_enable   ( fifoPush ),
-        .write_data     ( rd1 ),
-        .read_enable    ( fifoPop ),
-        .read_data      ( fifoOut ),
+        .clk            ( clk      ),
+        .reset          ( rst_n    ),
+        .writeEnable    ( fifoPush ),
+        .writeData      ( rd1      ),
+        .readEnable     ( fifoPop  ),
+        .readData       ( fifoOut  ),
     );
 
 endmodule
