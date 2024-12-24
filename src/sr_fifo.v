@@ -1,9 +1,8 @@
 
 module fifo
 #(
-    parameter DATA_WIDTH = 32;
-    parameter ADDR_WIDTH = 3;
-    parameter DEPTH = 2 ** ADDR_WIDTH;
+    parameter DATA_WIDTH = 32,
+              ADDR_WIDTH = 3
 )
 (
     input clk,
@@ -15,6 +14,8 @@ module fifo
     output reg full,
     output reg empty
 );
+    parameter DEPTH = 2 ** ADDR_WIDTH;
+    
     reg [DATA_WIDTH-1:0] fifo_mem [DEPTH-1:0];
     reg [ADDR_WIDTH-1:0] write_ptr = 0;
     reg [ADDR_WIDTH-1:0] read_ptr = 0;
