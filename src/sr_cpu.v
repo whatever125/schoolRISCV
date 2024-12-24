@@ -179,7 +179,7 @@ endmodule
 
 module sr_control
 (
-    input     [ 6:0] cmdOp,
+    input     [ 6:0] cmdOp, //опкод
     input     [ 2:0] cmdF3,
     input     [ 6:0] cmdF7,
     input            aluZero,
@@ -200,8 +200,10 @@ module sr_control
         condZero    = 1'b0;
         regWrite    = 1'b0;
         aluSrc      = 1'b0;
-        wdSrc       = 1'b0;
+        wdSrc       = 2'b00;
         aluControl  = `ALU_ADD;
+        fifoPop   = 1'b0;
+        fifoPush  = 1'b0;
 
         casez( {cmdF7, cmdF3, cmdOp} )
             { `RVF7_ADD,  `RVF3_ADD,  `RVOP_ADD  } : begin regWrite = 1'b1; aluControl = `ALU_ADD;  end
@@ -211,10 +213,13 @@ module sr_control
             { `RVF7_SUB,  `RVF3_SUB,  `RVOP_SUB  } : begin regWrite = 1'b1; aluControl = `ALU_SUB;  end
 
             { `RVF7_ANY,  `RVF3_ADDI, `RVOP_ADDI } : begin regWrite = 1'b1; aluSrc = 1'b1; aluControl = `ALU_ADD; end
-            { `RVF7_ANY,  `RVF3_ANY,  `RVOP_LUI  } : begin regWrite = 1'b1; wdSrc  = 1'b1; end
+            { `RVF7_ANY,  `RVF3_ANY,  `RVOP_LUI  } : begin regWrite = 1'b1; wdSrc  = 2'b01; end
 
             { `RVF7_ANY,  `RVF3_BEQ,  `RVOP_BEQ  } : begin branch = 1'b1; condZero = 1'b1; aluControl = `ALU_SUB; end
             { `RVF7_ANY,  `RVF3_BNE,  `RVOP_BNE  } : begin branch = 1'b1; aluControl = `ALU_SUB; end
+            { `RVF7_ANY,  `RVF3_FIFO_PUSH, `RVOP_FIFO } : begin fifoPush = 1'b1; end
+            { `RVF7_ANY,  `RVF3_FIFO_POP,  `RVOP_FIFO } : begin fifoPop  = 1'b1; wdSrc  = 2'b10; end
+
         endcase
     end
 endmodule

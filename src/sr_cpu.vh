@@ -14,6 +14,7 @@
 `define ALU_SRL     3'b010
 `define ALU_SLTU    3'b011
 `define ALU_SUB     3'b100
+`define ALU_NOOP    3'b101 
 
 // instruction opcode
 `define RVOP_ADDI   7'b0010011
@@ -25,6 +26,8 @@
 `define RVOP_SRL    7'b0110011
 `define RVOP_SLTU   7'b0110011
 `define RVOP_SUB    7'b0110011
+`define RVOP_PUSH   7'b0100011
+`define RVOP_POP    7'b0000011
 
 // instruction funct3
 `define RVF3_ADDI   3'b000
@@ -36,6 +39,8 @@
 `define RVF3_SLTU   3'b011
 `define RVF3_SUB    3'b000
 `define RVF3_ANY    3'b???
+`define RVF3_PUSH   3'b010 
+`define RVF3_POP    3'b010 
 
 // instruction funct7
 `define RVF7_ADD    7'b0000000
