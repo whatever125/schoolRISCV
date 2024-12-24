@@ -105,7 +105,7 @@ module sr_cpu
         .result     ( aluResult    ) 
     );
 
-    assign wd3 = { wdSrc == 2'b01 } ? fifoOut : { wdSrc == 2'b01 } ? immU : aluResult;
+    assign wd3 = { wdSrc == 2'b10 } ? fifoOut : { wdSrc == 2'b01 } ? immU : aluResult;
 
     //control
     sr_control sm_control (

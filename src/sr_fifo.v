@@ -11,14 +11,14 @@ module fifo
     input [DATA_WIDTH-1:0] write_data,
     input read_enable,
     output reg [DATA_WIDTH-1:0] read_data,
-    output reg full,
-    output reg empty
 );
     parameter DEPTH = 2 ** ADDR_WIDTH;
     
     reg [DATA_WIDTH-1:0] fifo_mem [DEPTH-1:0];
     reg [ADDR_WIDTH-1:0] write_ptr = 0;
     reg [ADDR_WIDTH-1:0] read_ptr = 0;
+    reg full;
+    reg empty;
     
     initial begin
         write_ptr <= 0;
