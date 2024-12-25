@@ -5,18 +5,17 @@
 
         .text
 
-start:  li      a0, 0               # count = 0
-        li      a2, 7               # max = 7
-push_l: addi    a0, a0, 1           # count += 1
-        sw      a0, 0(a0)           # push count
-        bne     a0, a2, push_l      # if count <= max then push_l
-        li      a2, -1              # min = -1
-pop_l:  
-        sw      a1, 0(a1)           # pop check
-        bne     a1, a0, bad         # if check != count then bad
-        addi    a0, a0, -1          # count -= 1
-        bne     a0, a2, push_l      # if count > min then pop_l
-good:   li      a1, 0               # result = 0
-        beqz    zero, end           # end
-bad:    li      a1, 1               # result = 1
-end:    beqz    zero, end           # end
+start:  addi    a1, zero, 0             # count = 0
+        addi    a3, zero, 8             # max = 8
+push_l: addi    a1, a1, 1               # count += 1
+        sw      a0, 0(a1)               # push count
+        bne     a1, a3, push_l          # if count <= max then push_l
+        addi    a3, zero, 0             # min = 0
+pop_l:  lw      a2, 0(a0)               # pop check
+        bne     a2, a1, bad             # if check != count then bad
+        addi    a1, a1, -1              # count -= 1
+        bne     a1, a3, pop_l           # if count > min then pop_l
+good:   addi    a4, zero, 0             # result = 0
+        beq     zero, zero, end         # end
+bad:    addi    a4, zero, 1             # result = 1
+end:    beq     zero, zero, end         # end

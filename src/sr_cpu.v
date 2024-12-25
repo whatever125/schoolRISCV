@@ -179,7 +179,7 @@ endmodule
 
 module sr_control
 (
-    input     [ 6:0] cmdOp, //опкод
+    input     [ 6:0] cmdOp,
     input     [ 2:0] cmdF3,
     input     [ 6:0] cmdF7,
     input            aluZero,
@@ -188,8 +188,8 @@ module sr_control
     output reg       aluSrc,
     output reg [1:0] wdSrc,
     output reg [2:0] aluControl,
-    output reg       fifoPop,   // TODO assign
-    output reg       fifoPush   // TODO assign
+    output reg       fifoPop,
+    output reg       fifoPush
 );
     reg          branch;
     reg          condZero;
