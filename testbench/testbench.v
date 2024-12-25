@@ -13,7 +13,7 @@
 `include "sr_cpu.vh"
 
 `ifndef SIMULATION_CYCLES
-    `define SIMULATION_CYCLES 120
+    `define SIMULATION_CYCLES 20
 `endif
 
 module sm_testbench;
@@ -75,6 +75,7 @@ module sm_testbench;
         reg [31:0] immI;
         reg signed [31:0] immB;
         reg [31:0] immU;
+        reg [31:0] fifoIn;
 
     begin
         cmdOp = sm_top.sm_cpu.cmdOp;
@@ -86,6 +87,7 @@ module sm_testbench;
         immI  = sm_top.sm_cpu.immI;
         immB  = sm_top.sm_cpu.immB;
         immU  = sm_top.sm_cpu.immU;
+        fifoIn = sm_top.sm_cpu.fifoIn;
 
         $write("   ");
         casez( { cmdF7, cmdF3, cmdOp } )
@@ -101,6 +103,9 @@ module sm_testbench;
 
             { `RVF7_ANY,  `RVF3_BEQ,  `RVOP_BEQ  } : $write ("beq   $%1d, $%1d, 0x%8h (%1d)", rs1, rs2, immB, immB);
             { `RVF7_ANY,  `RVF3_BNE,  `RVOP_BNE  } : $write ("bne   $%1d, $%1d, 0x%8h (%1d)", rs1, rs2, immB, immB);
+
+            { `RVF7_ANY,  `RVF3_PUSH, `RVOP_PUSH } : $write ("push  $%1d", rs1);
+            { `RVF7_ANY,  `RVF3_POP,  `RVOP_POP  } : $write ("pop  $%1d", rs1);
         endcase
     end
     endtask
@@ -111,7 +116,7 @@ module sm_testbench;
 
     always @ (posedge clk)
     begin
-        $write ("%5d  pc = %2h instr = %h   a0 = %1d", 
+        $write ("%5d  pc = %2h instr = %h a0 = %1d", 
                   cycle, sm_top.sm_cpu.pc, sm_top.sm_cpu.instr, sm_top.sm_cpu.rf.rf[10]);
 
         disasmInstr();

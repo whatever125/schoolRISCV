@@ -129,7 +129,7 @@ module sr_cpu
         .writeEnable    ( fifoPush ),
         .writeData      ( rd1      ),
         .readEnable     ( fifoPop  ),
-        .readData       ( fifoOut  ),
+        .readData       ( fifoOut  )
     );
 
 endmodule
@@ -217,8 +217,8 @@ module sr_control
 
             { `RVF7_ANY,  `RVF3_BEQ,  `RVOP_BEQ  } : begin branch = 1'b1; condZero = 1'b1; aluControl = `ALU_SUB; end
             { `RVF7_ANY,  `RVF3_BNE,  `RVOP_BNE  } : begin branch = 1'b1; aluControl = `ALU_SUB; end
-            { `RVF7_ANY,  `RVF3_FIFO_PUSH, `RVOP_FIFO } : begin fifoPush = 1'b1; end
-            { `RVF7_ANY,  `RVF3_FIFO_POP,  `RVOP_FIFO } : begin fifoPop  = 1'b1; wdSrc  = 2'b10; end
+            { `RVF7_ANY,  `RVF3_PUSH, `RVOP_PUSH } : begin fifoPush = 1'b1; end
+            { `RVF7_ANY,  `RVF3_POP,  `RVOP_POP } : begin fifoPop  = 1'b1; wdSrc  = 2'b10; end
 
         endcase
     end

@@ -10,7 +10,7 @@ module fifo
     input writeEnable,
     input [DATA_WIDTH-1:0] writeData,
     input readEnable,
-    output reg [DATA_WIDTH-1:0] readData,
+    output reg [DATA_WIDTH-1:0] readData
 );
     parameter DEPTH = 2 ** ADDR_WIDTH;
     
