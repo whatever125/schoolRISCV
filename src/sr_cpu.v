@@ -123,7 +123,7 @@ module sr_cpu
     );
     
     //fifo
-    sr_fifo sr_fifo(
+    sr_fifo fifo(
         .clk            ( clk      ),
         .reset          ( rst_n    ),
         .writeEnable    ( fifoPush ),
