@@ -55,7 +55,7 @@ module sr_cpu
     //fifo
     wire fifoPop;
     wire fifoPush;
-    wire [FIFO_DATA_WIDTH-1:0] fifoOut;
+    wire [31:0] fifoOut;
 
     //instruction decode
     sr_decode id (
@@ -217,8 +217,8 @@ module sr_control
 
             { `RVF7_ANY,  `RVF3_BEQ,  `RVOP_BEQ  } : begin branch = 1'b1; condZero = 1'b1; aluControl = `ALU_SUB; end
             { `RVF7_ANY,  `RVF3_BNE,  `RVOP_BNE  } : begin branch = 1'b1; aluControl = `ALU_SUB; end
-            { `RVF7_ANY,  `RVF3_PUSH, `RVOP_PUSH } : begin fifoPush = 1'b1; end
-            { `RVF7_ANY,  `RVF3_POP,  `RVOP_POP } : begin fifoPop  = 1'b1; wdSrc  = 2'b10; end
+            { `RVF7_ANY,  `RVF3_PUSH, `RVOP_PUSH } : begin fifoPop = 1'b0; fifoPush = 1'b1; end
+            { `RVF7_ANY,  `RVF3_POP,  `RVOP_POP  } : begin fifoPop = 1'b1; fifoPush = 1'b0; regWrite = 1'b1; wdSrc = 2'b10; end
 
         endcase
     end
