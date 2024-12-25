@@ -16,11 +16,11 @@ module sm_rom
     input  [31:0] a,
     output [31:0] rd
 );
-    reg [31:0] rom [SIZE - 1:0];
+    reg [31:0] rom [0:SIZE - 1];
     assign rd = rom [a];
 
     initial begin
-        $readmemh ("program.hex", rom);
+        $readmemh ("program.hex", rom, 0, SIZE - 1);
     end
 
 endmodule

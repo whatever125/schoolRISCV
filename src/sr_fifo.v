@@ -1,5 +1,5 @@
 
-module fifo
+module sr_fifo
 #(
     parameter DATA_WIDTH = 32,
               ADDR_WIDTH = 3

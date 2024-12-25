@@ -86,7 +86,7 @@ module sm_testbench;
         immI  = sm_top.sm_cpu.immI;
         immB  = sm_top.sm_cpu.immB;
         immU  = sm_top.sm_cpu.immU;
-        fifoIn = sm_top.sm_cpu.fifoIn;
+        
 
         $write("   ");
         casez( { cmdF7, cmdF3, cmdOp } )
