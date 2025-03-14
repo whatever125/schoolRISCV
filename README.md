@@ -1,10 +1,24 @@
-# schoolRISCV
+# Функциональная схемотехника
+
+## ЛР «Расширение возможностей учебного процессорного ядра schoolRISCV»
+
+### Вариант: FIFO
+
+### Текст задания
+
+1. Модифицировать процессорное ядро для реализации очереди по принципу FIFO, реализовать две команды:
+   - push xN - должна загружать данные из младшей части регистра xN в очередь;
+   - pop xN - должна выгружать данные в младшую часть регистра xN.
+2. Подготовить тестовое окружение системного уровня и убедиться в корректности реализации путём запуска симуляционных тестов.
+
+
+## schoolRISCV
 
 Tiny RISCV CPU. Originally based on Sarah L. Harris MIPS CPU ("Digital Design and Computer Arhitecture" by David Money Harris and Sarah L Harris) and [schoolMIPS](https://github.com/MIPSfpga/schoolMIPS) project. Supports only a subset of RISCV commands.
 
 ![schoolRISCV](https://raw.githubusercontent.com/wiki/zhelnio/schoolRISCV/img/schoolRISCV.gif)
 
-## Docs
+### Docs
 
 [HDL Tools Install](install/readme.md)
 
